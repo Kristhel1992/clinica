@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <h2 class="mb-4">📅 Citas Registradas</h2>
+
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Lista de Citas</h5>
+        </div>
+        <div class="card-body">
+            {% if citas %}
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Paciente</th>
+                                <th>Doctor</th>
+                                <th>Especialidad</th>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Motivo</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cita in citas %}
+                            <tr>
+                                <td>{{ cita.paciente.first_name }} {{ cita.paciente.last_name }}</td>
+                                <td>{{ cita.doctor.usuario.first_name }} {{ cita.doctor.usuario.last_name }}</td>
+                                <td>
+                                    {% if cita.doctor.especialidad == 'odontologo' %}
+                                        🦷 Odontólogo
+                                    {% else %}
+                                        💊 Médico General
+                                    {% endif %}
+                                </td>
+                                <td>{{ cita.fecha|date:"d/m/Y" }}</td>
+                                <td>{{ cita.hora }}</td>
+                                <td>{{ cita.motivo }}</td>
+                                <td>
+                                    {% if cita.estado == 'pendiente' %}
+                                        <span class="badge bg-warning text-dark">Pendiente</span>
+                                    {% elif cita.estado == 'confirmada' %}
+                                        <span class="badge bg-info">Confirmada</span>
+                                    {% elif cita.estado == 'atendida' %}
+                                        <span class="badge bg-success">Atendida</span>
+                                    {% elif cita.estado == 'cancelada' %}
+                                        <span class="badge bg-danger">Cancelada</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="alert alert-info mb-0">No hay citas registradas</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <a href="/admin/" class="btn btn-primary mt-3">⬅️ Volver al Admin</a>
+</div>
+
+<style>
+    .card {
+        border: none;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        border-radius: 8px;
+    }
+</style>
+
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <h2 class="mb-4">📄 Documentos Registrados</h2>
+
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Lista de Documentos</h5>
+        </div>
+        <div class="card-body">
+            {% if documentos %}
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Paciente</th>
+                                <th>Doctor</th>
+                                <th>Fecha Subida</th>
+                                <th>Revisado</th>
+                                <th>Archivo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for documento in documentos %}
+                            <tr>
+                                <td>
+                                    {% if documento.tipo == 'radiografia' %}
+                                        🖼️ Radiografía
+                                    {% else %}
+                                        🔬 Análisis Clínico
+                                    {% endif %}
+                                </td>
+                                <td>{{ documento.cita.paciente.first_name }} {{ documento.cita.paciente.last_name }}</td>
+                                <td>{{ documento.cita.doctor.usuario.first_name }} {{ documento.cita.doctor.usuario.last_name }}</td>
+                                <td>{{ documento.fecha_subida|date:"d/m/Y H:i" }}</td>
+                                <td>
+                                    {% if documento.revisado %}
+                                        <span class="badge bg-success">✓ Revisado</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">⚠ Sin revisar</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{{ documento.archivo.url }}" class="btn btn-sm btn-outline-primary" download>Descargar</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="alert alert-info mb-0">No hay documentos registrados</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <a href="/admin/" class="btn btn-primary mt-3">⬅️ Volver al Admin</a>
+</div>
+
+<style>
+    .card {
+        border: none;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        border-radius: 8px;
+    }
+</style>
+
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="mb-4">Panel Principal</h2>
+
+<div class="row">
+
+    <div class="col-md-3">
+        <div class="card shadow p-3 text-center">
+            <h5>Pacientes</h5>
+            <a href="/usuarios/" class="btn btn-outline-primary mt-2">Ver</a>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow p-3 text-center">
+            <h5>Doctores</h5>
+            <a href="/doctores/" class="btn btn-outline-primary mt-2">Ver</a>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow p-3 text-center">
+            <h5>Citas</h5>
+            <a href="/citas/" class="btn btn-outline-primary mt-2">Ver</a>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow p-3 text-center">
+            <h5>Documentos</h5>
+            <a href="/documentos/" class="btn btn-outline-primary mt-2">Ver</a>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

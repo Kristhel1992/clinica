@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <h2 class="mb-4">👨‍⚕️ Panel del Doctor</h2>
+    <p class="text-muted mb-4">Bienvenido, Dr./Dra. <strong>{{ user.first_name }} {{ user.last_name }}</strong></p>
+
+    <!-- ESTADÍSTICAS RÁPIDAS -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body text-center">
+                    <h5>Pacientes</h5>
+                    <h2>{{ pacientes.count }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-info text-white">
+                <div class="card-body text-center">
+                    <h5>Citas Totales</h5>
+                    <h2>{{ citas.count }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-white">
+                <div class="card-body text-center">
+                    <h5>Citas Pendientes</h5>
+                    <h2>{{ citas_pendientes }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body text-center">
+                    <h5>Documentos</h5>
+                    <h2>{{ documentos.count }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CITAS DEL DOCTOR -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">📅 Mis Citas</h5>
+                </div>
+                <div class="card-body">
+                    {% if citas %}
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Paciente</th>
+                                        <th>Teléfono</th>
+                                        <th>Fecha</th>
+                                        <th>Hora</th>
+                                        <th>Motivo</th>
+                                        <th>Estado</th>
+                                        <th>Documentos</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for cita in citas %}
+                                    <tr>
+                                        <td><strong>{{ cita.paciente.first_name }} {{ cita.paciente.last_name }}</strong></td>
+                                        <td>{{ cita.paciente.telefono|default:"N/A" }}</td>
+                                        <td>{{ cita.fecha|date:"d/m/Y" }}</td>
+                                        <td>{{ cita.hora }}</td>
+                                        <td>{{ cita.motivo }}</td>
+                                        <td>
+                                            {% if cita.estado == 'pendiente' %}
+                                                <span class="badge bg-warning text-dark">Pendiente</span>
+                                            {% elif cita.estado == 'confirmada' %}
+                                                <span class="badge bg-info">Confirmada</span>
+                                            {% elif cita.estado == 'atendida' %}
+                                                <span class="badge bg-success">Atendida</span>
+                                            {% elif cita.estado == 'cancelada' %}
+                                                <span class="badge bg-danger">Cancelada</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% with doc_count=cita.documento_set.count %}
+                                                {% if doc_count > 0 %}
+                                                    <span class="badge bg-success">{{ doc_count }} archivos</span>
+                                                {% else %}
+                                                    <span class="badge bg-secondary">—</span>
+                                                {% endif %}
+                                            {% endwith %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info mb-0">📭 No tienes citas registradas</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- LISTA DE PACIENTES -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">👥 Mis Pacientes</h5>
+                </div>
+                <div class="card-body">
+                    {% if pacientes %}
+                        <div style="max-height: 400px; overflow-y: auto;">
+                            {% for paciente in pacientes %}
+                            <div class="border-bottom pb-3 mb-3">
+                                <h6 class="mb-1"><strong>{{ paciente.first_name }} {{ paciente.last_name }}</strong></h6>
+                                <small class="text-muted d-block">Email: {{ paciente.email }}</small>
+                                <small class="text-muted d-block">Teléfono: {{ paciente.telefono|default:"No registrado" }}</small>
+                                <small class="text-muted">Usuario: @{{ paciente.username }}</small>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info mb-0">👤 Sin pacientes asignados</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- DOCUMENTOS RECIENTES -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-warning text-white">
+                    <h5 class="mb-0">📄 Documentos Recientes</h5>
+                </div>
+                <div class="card-body">
+                    {% if documentos %}
+                        <div style="max-height: 400px; overflow-y: auto;">
+                            {% for doc in documentos|slice:":10" %}
+                            <div class="border-bottom pb-3 mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <h6 class="mb-0"><strong>{{ doc.get_tipo_display }}</strong></h6>
+                                    <small>{{ doc.fecha_subida|date:"d/m/Y H:i" }}</small>
+                                </div>
+                                <small class="text-muted d-block">Paciente: {{ doc.cita.paciente.first_name }} {{ doc.cita.paciente.last_name }}</small>
+                                <small class="text-muted d-block mb-2">Archivo: {{ doc.archivo.name|truncatechars:40 }}</small>
+                                <div>
+                                    {% if doc.revisado %}
+                                        <span class="badge bg-success me-2">✓ Revisado</span>
+                                    {% else %}
+                                        <span class="badge bg-danger me-2">⚠ Sin revisar</span>
+                                    {% endif %}
+                                    <a href="{{ doc.archivo.url }}" class="btn btn-sm btn-outline-primary" download>Descargar</a>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info mb-0">📭 Sin documentos subidos</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OPCIONES DISPONIBLES -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">🔗 Acciones</h5>
+                </div>
+                <div class="card-body">
+                    <a href="/citas/" class="btn btn-primary me-2">📅 Ver Citas</a>
+                    <a href="/doctores/" class="btn btn-success me-2">👨‍⚕️ Ver Doctores</a>
+                    <a href="/documentos/" class="btn btn-warning me-2">📄 Ver Documentos</a>
+                    <a href="/logout/" class="btn btn-danger">🚪 Cerrar Sesión</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    .card {
+        border: none;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        border-radius: 8px;
+        transition: transform 0.3s;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    .badge {
+        font-size: 0.85rem;
+        padding: 6px 10px;
+    }
+    .table-hover tbody tr:hover {
+        background-color: #f5f5f5;
+    }
+</style>
+
+{% endblock %}
+

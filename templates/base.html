@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Consultorio Medico V&L</title>
+
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #e8eef5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar {
+            background-color: #1e3a5f;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-brand, .nav-link {
+            color: white !important;
+        }
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .nav-link {
+            font-weight: 500;
+            transition: opacity 0.3s ease;
+        }
+        .nav-link:hover {
+            opacity: 0.8;
+        }
+        .card {
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: box-shadow 0.3s ease;
+        }
+        .card:hover {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        }
+        .navbar-nav-left {
+            margin-left: auto;
+        }
+        .navbar-nav-right {
+            margin-left: 20px;
+        }
+        .btn-registro {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin: 0 8px;
+            transition: all 0.3s ease;
+            border: none;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-paciente {
+            background-color: #0066cc;
+            color: white;
+        }
+        .btn-paciente:hover {
+            background-color: #004fa3;
+            color: white;
+            text-decoration: none;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+        }
+        .btn-doctor {
+            background-color: #5a6e7f;
+            color: white;
+        }
+        .btn-doctor:hover {
+            background-color: #3d4a59;
+            color: white;
+            text-decoration: none;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(90, 110, 127, 0.3);
+        }
+        .nav-divider {
+            width: 1px;
+            height: 30px;
+            background-color: rgba(255, 255, 255, 0.2);
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- 🔷 NAVBAR -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid px-4">
+        <a class="navbar-brand" href="/" style="font-size: 1.5rem; font-weight: bold;">🏥 Consultorio Medico V&L</a>
+
+        <div class="navbar-nav-left">
+            {% if user.is_authenticated %}
+                <a class="nav-link d-inline me-3" href="/dashboard/">📊 Dashboard</a>
+                <a class="nav-link d-inline" href="/logout/">🚪 Cerrar sesión</a>
+            {% else %}
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <a class="nav-link d-inline" href="/login/">🔐 Iniciar sesión</a>
+                    <div class="nav-divider"></div>
+                    <a href="/registro/paciente/" class="btn-registro btn-paciente">Paciente</a>
+                    <a href="/registro/doctor/" class="btn-registro btn-doctor">Doctor</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+<!-- 🔷 CONTENIDO -->
+<div class="container mt-5">
+    {% block content %}
+    {% endblock %}
+</div>
+<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+<script type="module">
+	import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+	createChat({
+		webhookUrl: 'https://galud.app.n8n.cloud/webhook/6d381d70-46b4-4bbe-8b1e-27751e36f32b/chat',
+		initialMessages: [
+			"Hola, bienvenido a Consultorio Médico V&L 🏥",
+			"¿Cómo puedo ayudarte hoy?"
+		],
+		title: "Asistente Médico",
+		subtitle: "Chat de soporte 24/7"
+	});
+</script>
+</body>
+</html>

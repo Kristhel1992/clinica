@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Mis Citas</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if citas %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Doctor</th>
+                        <th>Especialidad</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Motivo</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cita in citas %}
+                        <tr>
+                            <td><strong>{{ cita.doctor.usuario.get_full_name }}</strong></td>
+                            <td>{{ cita.doctor.get_especialidad_display }}</td>
+                            <td>{{ cita.fecha }}</td>
+                            <td>{{ cita.hora }}</td>
+                            <td>{{ cita.motivo|truncatewords:5 }}</td>
+                            <td>
+                                <span class="badge bg-{% if cita.estado == 'confirmada' %}success{% elif cita.estado == 'pendiente' %}warning{% elif cita.estado == 'atendida' %}info{% else %}danger{% endif %}">
+                                    {{ cita.get_estado_display }}
+                                </span>
+                            </td>
+                            <td>
+                                <a href="{% url 'subir_documento' cita.id %}" class="btn btn-sm btn-outline-success">Subir Documento</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            <h4 class="alert-heading">No tienes citas aún</h4>
+            <p>Aún no tienes citas programadas. <a href="{% url 'agendar_cita' %}">Agenda una cita ahora</a></p>
+        </div>
+    {% endif %}
+
+    <div class="mt-4">
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">Volver al Panel</a>
+        <a href="{% url 'agendar_cita' %}" class="btn btn-primary">Agendar Nueva Cita</a>
+    </div>
+</div>
+{% endblock %}

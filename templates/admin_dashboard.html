@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <h2 class="mb-4">⚙️ Panel de Administración</h2>
+    <p class="text-muted mb-4">Gestiona todos los datos del consultorio desde aquí</p>
+
+    <!-- ACCESO RÁPIDO -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header bg-clinic text-white">
+                    <h5 class="mb-0">👥 Pacientes</h5>
+                </div>
+                <div class="card-body text-center">
+                    <h2>{{ pacientes_count }}</h2>
+                    <p class="text-muted mb-3">Pacientes registrados</p>
+                    <a href="/usuarios/" class="btn btn-outline-info">Ver Pacientes</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header bg-clinic text-white">
+                    <h5 class="mb-0">👨‍⚕️ Doctores</h5>
+                </div>
+                <div class="card-body text-center">
+                    <h2>{{ doctores_count }}</h2>
+                    <p class="text-muted mb-3">Doctores registrados</p>
+                    <a href="/doctores/" class="btn btn-outline-info">Ver Doctores</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header bg-clinic text-white">
+                    <h5 class="mb-0">📅 Citas</h5>
+                </div>
+                <div class="card-body text-center">
+                    <h2>{{ citas_count }}</h2>
+                    <p class="text-muted mb-3">Citas programadas</p>
+                    <a href="/citas/" class="btn btn-outline-info">Ver Citas</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header bg-clinic text-white">
+                    <h5 class="mb-0">📄 Documentos</h5>
+                </div>
+                <div class="card-body text-center">
+                    <h2>{{ documentos_count }}</h2>
+                    <p class="text-muted mb-3">Documentos subidos</p>
+                    <a href="/documentos/" class="btn btn-outline-info">Ver Documentos</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ACCESO AL ADMIN OFICIAL -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-clinic text-white">
+                    <h5 class="mb-0">🔧 Administración Avanzada</h5>
+                </div>
+                <div class="card-body">
+                    <p class="mb-3">Accede al panel de administración oficial de Django para gestión más avanzada:</p>
+                    <a href="/admin/" class="btn btn-clinic">🔐 Ir al Panel Django Admin</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border: none;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        border-radius: 8px;
+        transition: transform 0.3s;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    
+    /* Colores personalizados para clínica */
+    .bg-clinic {
+        background-color: #57c0f0 !important;
+    }
+    
+    .btn-clinic {
+        background-color: #57c0f0;
+        border-color: #57c0f0;
+        color: white;
+    }
+    
+    .btn-clinic:hover {
+        background-color: #57c0f0;
+        border-color: #57c0f0;
+        color: white;
+    }
+    
+    .btn-clinic:focus,
+    .btn-clinic:active {
+        background-color: #57c0f0;
+        border-color: #57c0f0;
+        color: white;
+        box-shadow: #57c0f0 0 0 0 0.2rem;
+    }
+</style>
+
+{% endblock %}
