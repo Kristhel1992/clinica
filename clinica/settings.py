@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'doctores',
     'citas',
     'documentos',
-    'chatbot',
 ]
 AUTH_USER_MODEL = 'usuarios.Usuario'
 MIDDLEWARE = [
