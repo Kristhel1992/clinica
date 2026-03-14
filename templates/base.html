@@ -91,15 +91,15 @@
 <!-- 🔷 NAVBAR -->
 <nav class="navbar navbar-expand-lg">
     <div class="container-fluid px-4">
-        <a class="navbar-brand" href="/" style="font-size: 1.5rem; font-weight: bold;">🏥 Consultorio Medico V&L</a>
-
-        <div class="navbar-nav-left">
+        <a class="navbar-brand" href="/" style="font-size: 1.5rem; font-weight: bold;"> Consultorio Medico V&L</a>
+        <div id="n8n-chat"></div>
+     
             {% if user.is_authenticated %}
-                <a class="nav-link d-inline me-3" href="/dashboard/">📊 Dashboard</a>
-                <a class="nav-link d-inline" href="/logout/">🚪 Cerrar sesión</a>
+                <a class="nav-link d-inline me-3" href="/dashboard/"> Dashboard</a>
+                <a class="nav-link d-inline" href="/logout/"> Cerrar sesión</a>
             {% else %}
                 <div style="display: flex; align-items: center; gap: 10px;">
-                    <a class="nav-link d-inline" href="/login/">🔐 Iniciar sesión</a>
+                    <a class="nav-link d-inline" href="/login/"> Iniciar sesión</a>
                     <div class="nav-divider"></div>
                     <a href="/registro/paciente/" class="btn-registro btn-paciente">Paciente</a>
                     <a href="/registro/doctor/" class="btn-registro btn-doctor">Doctor</a>
@@ -114,19 +114,38 @@
     {% block content %}
     {% endblock %}
 </div>
-<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
-<script type="module">
-	import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
-	createChat({
-		webhookUrl: 'https://galud.app.n8n.cloud/webhook/6d381d70-46b4-4bbe-8b1e-27751e36f32b/chat',
-		initialMessages: [
-			"Hola, bienvenido a Consultorio Médico V&L 🏥",
-			"¿Cómo puedo ayudarte hoy?"
-		],
-		title: "Asistente Médico",
-		subtitle: "Chat de soporte 24/7"
-	});
+<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+
+<div id="n8n-chat"></div>
+
+<script type="module">
+import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+createChat({
+     webhookUrl: 'https://galudg.app.n8n.cloud/webhook/abb36324-4f98-4448-8dc7-9bb91a1a55e1/chat',
+    target: '#n8n-chat',
+    mode: 'window',
+
+    showWelcomeScreen: true,
+    defaultLanguage: 'es',
+
+    initialMessages: [
+        "Soy el Asistente de la Clínica V&L",
+        "¿Cómo puedo ayudarte hoy?"
+    ],
+
+        i18n: {
+            es: {
+            title: "Hola, bienvenido a Consultorio Médico V&L",
+            subtitle: "Puedes agendar citas o consultar doctores",
+            footer: "Atención virtual 24/7",
+            getStarted: "Iniciar conversación",
+            inputPlaceholder: "Escribe tu consulta aquí..."
+         }
+     }
+});
 </script>
+
 </body>
 </html>

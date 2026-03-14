@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'doctores',
     'citas',
     'documentos',
-    'chatbot',
 ]
 AUTH_USER_MODEL = 'usuarios.Usuario'
 MIDDLEWARE = [
@@ -79,7 +78,7 @@ WSGI_APPLICATION = 'clinica.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-        'default': {
+'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER': 'postgres',
@@ -98,7 +97,9 @@ WHATSAPP_VERIFY_TOKEN = "consultorio_bot_2024"  # Token seguro para webhook
 
 LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/login/'
-
+CSRF_TRUSTED_ORIGINS = [
+    "https://galudg.app.n8n.cloud",
+]
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 

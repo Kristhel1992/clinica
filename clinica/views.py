@@ -6,7 +6,14 @@ from usuarios.models import Usuario
 from doctores.models import Doctor
 from citas.models import Cita
 from documentos.models import Documento
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 
+@csrf_exempt
+def webhook_chat(request):
+    if request.method == "POST":
+        return JsonResponse({"mensaje": "Webhook recibido correctamente"})
+    return JsonResponse({"mensaje": "Solo POST permitido"})
 def home(request):
     return render(request, 'home.html')
 
@@ -56,3 +63,5 @@ def dashboard(request):
 def logout_view(request):
     logout(request)
     return redirect('home')
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
