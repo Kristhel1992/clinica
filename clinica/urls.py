@@ -38,4 +38,5 @@ urlpatterns = [
     path('citas/', include('citas.urls')),
     path('documentos/', include('documentos.urls')),
     path("webhook-chat/", views.webhook_chat, name="webhook_chat"),
+
 ]
