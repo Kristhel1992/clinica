@@ -3,13 +3,13 @@
 {% block content %}
 
 <div class="container-fluid">
-    <h2 class="mb-4">👨‍⚕️ Panel del Doctor</h2>
+    <h2 class="mb-4">Panel del Doctor</h2>
     <p class="text-muted mb-4">Bienvenido, Dr./Dra. <strong>{{ user.first_name }} {{ user.last_name }}</strong></p>
 
     <!-- ESTADÍSTICAS RÁPIDAS -->
     <div class="row mb-4">
         <div class="col-md-3">
-            <div class="card bg-primary text-white">
+            <div class="card bg-light text-dark">
                 <div class="card-body text-center">
                     <h5>Pacientes</h5>
                     <h2>{{ pacientes.count }}</h2>
@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card bg-info text-white">
+            <div class="card bg-light text-dark">
                 <div class="card-body text-center">
                     <h5>Citas Totales</h5>
                     <h2>{{ citas.count }}</h2>
@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card bg-warning text-white">
+            <div class="card bg-light text-dark">
                 <div class="card-body text-center">
                     <h5>Citas Pendientes</h5>
                     <h2>{{ citas_pendientes }}</h2>
@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card bg-success text-white">
+            <div class="card bg-light text-dark">
                 <div class="card-body text-center">
                     <h5>Documentos</h5>
                     <h2>{{ documentos.count }}</h2>
@@ -46,8 +46,8 @@
     <div class="row mb-4">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0">📅 Mis Citas</h5>
+                <div class="card-header bg-light text-dark">
+                    <h5 class="mb-0">Mis Citas</h5>
                 </div>
                 <div class="card-body">
                     {% if citas %}
@@ -98,7 +98,7 @@
                             </table>
                         </div>
                     {% else %}
-                        <div class="alert alert-info mb-0">📭 No tienes citas registradas</div>
+                        <div class="alert alert-primary mb-0">No tienes citas registradas</div>
                     {% endif %}
                 </div>
             </div>
@@ -109,8 +109,8 @@
         <!-- LISTA DE PACIENTES -->
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header bg-success text-white">
-                    <h5 class="mb-0">👥 Mis Pacientes</h5>
+                <div class="card-header bg-light text-dark">
+                    <h5 class="mb-0">Pacientes</h5>
                 </div>
                 <div class="card-body">
                     {% if pacientes %}
@@ -125,7 +125,7 @@
                             {% endfor %}
                         </div>
                     {% else %}
-                        <div class="alert alert-info mb-0">👤 Sin pacientes asignados</div>
+                        <div class="alert alert-primary mb-0">Sin pacientes asignados</div>
                     {% endif %}
                 </div>
             </div>
@@ -134,8 +134,8 @@
         <!-- DOCUMENTOS RECIENTES -->
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header bg-warning text-white">
-                    <h5 class="mb-0">📄 Documentos Recientes</h5>
+                <div class="card-header bg-light text-dark">
+                    <h5 class="mb-0">documentos</h5>
                 </div>
                 <div class="card-body">
                     {% if documentos %}
@@ -160,7 +160,7 @@
                             {% endfor %}
                         </div>
                     {% else %}
-                        <div class="alert alert-info mb-0">📭 Sin documentos subidos</div>
+                        <div class="alert alert-primary mb-0">Sin documentos subidos</div>
                     {% endif %}
                 </div>
             </div>
@@ -171,14 +171,14 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header bg-dark text-white">
-                    <h5 class="mb-0">🔗 Acciones</h5>
+                <div class="card-header bg-light text-dark">
+                    <h5 class="mb-0">Acciones</h5>
                 </div>
                 <div class="card-body">
-                    <a href="/citas/" class="btn btn-primary me-2">📅 Ver Citas</a>
-                    <a href="/doctores/" class="btn btn-success me-2">👨‍⚕️ Ver Doctores</a>
-                    <a href="/documentos/" class="btn btn-warning me-2">📄 Ver Documentos</a>
-                    <a href="/logout/" class="btn btn-danger">🚪 Cerrar Sesión</a>
+                    <a href="/citas/" class="btn btn-outline-info me-2">Ver Citas</a>
+                    <a href="/doctores/" class="btn btn-outline-info me-2">Ver Doctores</a>
+                    <a href="/documentos/" class="btn btn-outline-info me-2">Ver Documentos</a>
+                    <a href="/logout/" class="btn btn-outline-info">Cerrar Sesión</a>
                 </div>
             </div>
         </div>
